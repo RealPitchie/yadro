@@ -1,0 +1,56 @@
+@page "/blog"
+
+@using Data.Models
+@using Data.Services
+
+@inject BlogService blogService
+<div style="background: #000;"> 
+    <div style="position: absolute; top: 10%; left: 25px; width: 100%">
+        <div class="col-lg-10 align-self-center">
+            <h1 class="text-white  largest-text">Наши мысли</h1>
+            <hr class="divider" style="max-width: 35%; margin-left: 15px"/>
+        </div>
+        <div class="row" style="height: 50%; width: 60%; margin: 0 auto">
+            @if(posts.Count > 0)
+            {
+                @foreach (var item in posts)
+                {
+                    <div class="card" style="padding: 25px; margin: 25px auto">
+                        <img class="card-img-top" src=@("images/blog/" + item.Image) style="margin: 25px auto;" alt=@item.Title>
+                        <h3 class="card-title">
+                            @item.Title <span class="text-muted small-text" style="float: right;">@item.Posted.ToString("d")</span>
+                        </h3>
+                        <h5>
+                            @item.Subtitle
+                        </h5>
+                        @foreach (var line in item.Text)
+                        {
+                            <p>
+                                @line
+                            </p>
+                        }
+                    </div>
+                }
+            }
+        </div>
+        <div class="row" style="width: 80%; margin: 25px auto">
+            <a class="btn btn-primary" style="width: 150px" @onclick="AddPost">
+                Добавить пост
+            </a>
+        </div>
+    </div>
+    
+</div> 
+
+
+@code{
+    List<Post> posts = new();
+    protected override async Task OnInitializedAsync()
+    {
+        posts = await blogService.GetAsync();
+    }
+    async Task AddPost()
+    {
+
+    }
+}

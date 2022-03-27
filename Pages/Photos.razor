@@ -6,14 +6,19 @@
             <h1 class="text-white  largest-text">Наши фото</h1>
             <hr class="divider" style="max-width: 35%; margin-left: 15px"/>
         </div>
-        <div class="row gallery" style="justify-content: space-between;">
+        <div class="row gallery" style="width: 80%; margin: 25px auto; justify-content: space-between;">
              @foreach (var item in photos)
              {
                 <div class="col ramka">
-                    <img src=@item alt="" width="250" tabindex="0"/>
+                    <img src=@item alt="" style="box-shadow: 0 0 5px #666666;" width="250" tabindex="0"/>
                 </div>
              }
             
+        </div>
+        <div class="row" style="width: 80%; margin: 25px auto">
+            <a class="btn btn-primary" style="width: 150px" @onclick="AddImage">
+                Добавить фото
+            </a>
         </div>
     </div>
     
@@ -34,5 +39,9 @@
         photos.Add("images/test4.jpg");
         photos.Add("images/test5.jpg");
         photos.Add("images/test6.jpg");
+    }
+    async Task AddImage()
+    {
+
     }
 }
