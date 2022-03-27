@@ -1,0 +1,50 @@
+@page "/videos"
+
+<div style="background: #000;">
+    @* <div class="image-overlay" style="@image"></div> *@
+    <div style="position: absolute; top: 10%; left: 25px; width: 90%">
+        <div class="col-lg-10 align-self-center">
+            <h1 class="text-white  largest-text">Наше видео</h1>
+            <hr class="divider" style="max-width: 35%; margin-left: 15px"/>
+        </div>
+        <div class="row" style="justify-content: space-between;">
+            @foreach (var item in videos)
+            {
+                <div class="col-md-4" style="margin-bottom: 25pxngi;">
+                    <iframe width="480" height="320"
+                        srcdoc="<style>*{padding:0;margin:0;overflow:hidden}
+                            html,body{height:100%}
+                            img,span{position:absolute;width:100%;top:0;bottom:0;margin:auto}
+                            span{height:1.5em;text-align:center;font:48px/1.5 sans-serif;color:white;text-shadow:0 0 0.5em black}
+                            </style>
+                            <a href=https://www.youtube.com/embed/@item?autoplay=1>
+                            <img src=https://img.youtube.com/vi/@item/hqdefault.jpg alt='Demo video'>
+                            <span>▶</span>
+                            </a>"
+                        src=@item title="YouTube video player" frameborder="1" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            }
+            
+        </div>
+    </div>
+    
+</div> 
+
+@code{
+    List<string> videos = new();
+    string image = string.Empty;
+    protected override void OnInitialized()
+    {
+        var rnd = new Random();
+        image = "background-image: url(/images/mainbg" + Math.Ceiling((decimal)rnd.Next(1,400)/100) + ".jpg);opacity: .1";
+        videos.Add("kibJJCxMa8c");
+        videos.Add("4QpZkaP1i0I");
+        videos.Add("bsjHDFM_RW0");
+        videos.Add("ukfCdCthnNo");
+        videos.Add("7guwS_kmX0c");
+        videos.Add("ATjZavWTWsg");
+    }
+}

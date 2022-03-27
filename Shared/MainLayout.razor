@@ -1,0 +1,27 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>yadro</PageTitle>
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <main> 
+
+        <article class="content">
+            <div class="image-overlay" style="@image"></div>
+            @Body
+        </article>
+    </main>
+</div>
+@code{
+    string image = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        var rnd = new Random();
+        image = "position: fixed;background-image: url(/images/mainbg" + Math.Ceiling((decimal)rnd.Next(1,400)/100) + ".jpg);";
+        
+    }
+}

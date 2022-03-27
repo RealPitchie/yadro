@@ -1,0 +1,38 @@
+@page "/photos"
+
+<div style="background: #000;"> 
+    <div style="position: absolute; top: 10%; left: 25px; width: 100%">
+        <div class="col-lg-10 align-self-center">
+            <h1 class="text-white  largest-text">Наши фото</h1>
+            <hr class="divider" style="max-width: 35%; margin-left: 15px"/>
+        </div>
+        <div class="row gallery" style="justify-content: space-between;">
+             @foreach (var item in photos)
+             {
+                <div class="col ramka">
+                    <img src=@item alt="" width="250" tabindex="0"/>
+                </div>
+             }
+            
+        </div>
+    </div>
+    
+</div> 
+
+@code{
+    string image = string.Empty;
+    List<string> photos = new();
+    protected override void OnInitialized()
+    {
+        var rnd = new Random();
+        image = "background-image: url(/images/mainbg" + Math.Ceiling((decimal)rnd.Next(1,400)/100) + ".jpg);";
+
+        //temp shit
+        photos.Add("images/test1.jpg");
+        photos.Add("images/test2.jpg");
+        photos.Add("images/test3.jpg");
+        photos.Add("images/test4.jpg");
+        photos.Add("images/test5.jpg");
+        photos.Add("images/test6.jpg");
+    }
+}
