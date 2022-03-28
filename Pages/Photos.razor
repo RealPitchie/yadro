@@ -1,19 +1,21 @@
 @page "/photos"
 
 <div style="background: #000;"> 
-    <div style="position: absolute; top: 10%; width: 95%">
-        <div class="col-lg-10 align-self-center">
-            <h1 class="text-white  largest-text" style="margin-left: 25px;">Наши фото</h1>
-            <hr class="divider" style="max-width: 35%; margin-left: 25px"/>
-        </div>
-        <div class="row gallery" style="width: 80%; margin: 25px auto; justify-content: space-between;">
-             @foreach (var item in photos)
-             {
-                <div class="col ramka">
-                    <img src=@item alt="" style="box-shadow: 0 0 5px #666666;" width="250" tabindex="0"/>
-                </div>
-             }
-            
+    <div style="position: sticky; ">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-10 align-self-center">
+                <h1 class="text-white  largest-text-other" style="margin-left: 25px;">Наши фото</h1>
+                <hr class="divider" style="max-width: 35%; margin-left: 25px"/>
+            </div>
+            <div class="row gallery" style="width: 80%; margin: 25px auto; justify-content: space-between;">
+                @foreach (var item in photos)
+                {
+                    <div class="col ramka">
+                        <img src=@item alt="" style="box-shadow: 0 0 5px #666666;" width="250" tabindex="0"/>
+                    </div>
+                }
+                
+            </div>
         </div>
         <div class="row" style="width: 80%; margin: 25px auto">
             <a class="btn btn-primary" style="width: 150px" @onclick="AddImage">

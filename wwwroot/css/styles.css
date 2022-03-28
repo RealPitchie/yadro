@@ -11329,6 +11329,15 @@ header.masthead .h1 {
     font-family: 'Raleway', sans-serif;
 }
 
+.largest-text-other {
+    font-size: 7rem;
+    font-weight: 900;
+    z-index: 15;
+    font-family: 'Raleway', sans-serif;
+    margin-top: 10%;
+    text-align: start;
+}
+
 .blog-row {
     height: 50%;
     width: 60%;
@@ -11346,6 +11355,13 @@ header.masthead .h1 {
         font-weight: 900;
         z-index: 15;
         font-family: 'Raleway', sans-serif;
+    }
+    .largest-text-other {
+        font-size: 2.5rem;
+        font-weight: 900;
+        z-index: 15;
+        font-family: 'Raleway', sans-serif;
+        margin-top: 30%;
     }
 }
 

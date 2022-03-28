@@ -4,34 +4,38 @@
 @using Data.Services
 
 @inject BlogService blogService
+@inject NavigationManager navManager
+
 <div style="background: #000;"> 
-    <div style="position: absolute; top: 10%; width: 100%">
-        <div class="col-lg-10 align-self-center">
-            <h1 class="text-white  largest-text" style="margin-left: 25px;">Наши мысли</h1>
-            <hr class="divider" style="max-width: 35%; margin-left: 25px"/>
-        </div>
-        <div class="row blog-row">
-            @if(posts.Count > 0)
-            {
-                @foreach (var item in posts)
+    <div style="position: sticky; top: 10%; width: 100%">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-10 align-self-center">
+                <h1 class="text-white  largest-text-other" style="margin-left: 25px;">Наши мысли</h1>
+                <hr class="divider" style="max-width: 35%; margin-left: 25px"/>
+            </div>
+            <div class="row blog-row">
+                @if(posts.Count > 0)
                 {
-                    <div class="card" style="padding: 25px; margin: 25px auto">
-                        <img class="card-img-top" src=@("images/blog/" + item.Image) style="margin: 25px auto;" alt=@item.Title>
-                        <h3 class="card-title">
-                            @item.Title <span class="text-muted small-text" style="float: right;">@item.Posted.ToString("d")</span>
-                        </h3>
-                        <h5>
-                            @item.Subtitle
-                        </h5>
-                        <p>
-                            @item.Text
-                        </p>
-                    </div>
+                    @foreach (var item in posts)
+                    {
+                        <div class="card" style="padding: 25px; margin: 25px auto">
+                            <img class="card-img-top" src=@("images/blog/" + item.Image) style="margin: 25px auto;" alt=@item.Title>
+                            <h3 class="card-title">
+                                @item.Title <span class="text-muted small-text" style="float: right;">@item.Posted.ToString("d")</span>
+                            </h3>
+                            <h5>
+                                @item.Subtitle
+                            </h5>
+                            <p>
+                                @item.Text
+                            </p>
+                        </div>
+                    }
                 }
-            }
+            </div>
         </div>
         <div class="row" style="width: 80%; margin: 25px auto">
-            <a class="btn btn-primary" style="width: 150px" @onclick="AddPost">
+            <a class="btn btn-primary" style="width: 150px; margin-bottom: 50px" @onclick="AddPost">
                 Добавить пост
             </a>
         </div>
@@ -48,6 +52,6 @@
     }
     async Task AddPost()
     {
-
+        navManager.NavigateTo("addPost", true);
     }
 }
