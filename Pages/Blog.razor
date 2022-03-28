@@ -5,12 +5,12 @@
 
 @inject BlogService blogService
 <div style="background: #000;"> 
-    <div style="position: absolute; top: 10%; left: 25px; width: 100%">
+    <div style="position: absolute; top: 10%; width: 100%">
         <div class="col-lg-10 align-self-center">
-            <h1 class="text-white  largest-text">Наши мысли</h1>
-            <hr class="divider" style="max-width: 35%; margin-left: 15px"/>
+            <h1 class="text-white  largest-text" style="margin-left: 25px;">Наши мысли</h1>
+            <hr class="divider" style="max-width: 35%; margin-left: 25px"/>
         </div>
-        <div class="row" style="height: 50%; width: 60%; margin: 0 auto">
+        <div class="row blog-row">
             @if(posts.Count > 0)
             {
                 @foreach (var item in posts)
@@ -23,12 +23,9 @@
                         <h5>
                             @item.Subtitle
                         </h5>
-                        @foreach (var line in item.Text)
-                        {
-                            <p>
-                                @line
-                            </p>
-                        }
+                        <p>
+                            @item.Text
+                        </p>
                     </div>
                 }
             }

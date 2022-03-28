@@ -3,13 +3,13 @@
 <PageTitle>Ядерная Rомантика</PageTitle>  
 <div style="background: #000;">
     @* <div class="image-overlay" style="@image"></div> *@
-    <div style="position: absolute; top: 25%">
+    <div style="position: absolute; top: 45%; width: 95%">
             <div class="row h-100 align-items-center justify-content-center text-center">
                 <div class="col-lg-10 align-self-center">
-                    <h1 class="text-white font-weight-bold text-bold largest-text">ЗДЕСЬ ЖИВЕТ ТВОРЧЕСТВО</h1>
+                    <h1 class="text-white font-weight-bold text-bold largest-text">@title.ToUpper()</h1>
                     <hr class="divider" />
                 </div>
-                <div class="col-lg-8 align-self-baseline">
+                <div class="col-lg-8  ">
                     <p class="text-white-75 mb-5"></p>
                     <a class="btn btn-primary btn-xl" href="/blog">БЛИЖЕ</a>
                 </div>
@@ -21,9 +21,15 @@
 
 @code{
     string image = string.Empty;
+    string title = string.Empty;
+    List<string> titles = new();
     protected override void OnInitialized()
     {
+        titles.Add("Здесь рождается творчество");
+        titles.Add( "Здесь живет звук" );
+        titles.Add("Здесь всегда тепло");
+        titles.Add("Здесь мы");
         var rnd = new Random();
-        image = "background-image: url(/images/mainbg" + Math.Ceiling((decimal)rnd.Next(1,400)/100) + ".jpg);";
+        title = titles[rnd.Next(0,4)];
     }
 }
