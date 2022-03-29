@@ -9,15 +9,15 @@
 <div style="background: #000;">
     @* <div class="image-overlay" style="@image"></div> *@
     <div style="position: sticky; marin-top: 10%; margin-left: 25px;  ">
-        <div class="row h-100 align-items-center justify-content-center text-center" style="margin-bottom: 50px">
+        <div class="row align-items-center justify-content-center text-center" style="margin-bottom: 50px">
             <div class="col-lg-10 align-self-center">
                 <h1 class="text-white largest-text-other">Наше видео</h1>
                 <hr class="divider" style="max-width: 35%; margin-left: 15px"/>
             </div>
-            <div class="row" style="justify-content: space-between;">
+            <div class="row" style="justify-content: space-between;  margin-bottom: 50px">
                 @foreach (var item in videos)
                 {
-                    <div class="col-md-4" style="height: 30vh; margin-bottom: 25px;">
+                    <div class="col-md-6 video-block" >
                         <iframe style=""
                             srcdoc="<style>*{padding:0;margin:0;overflow:hidden}
                                 html,body{height:100%}
@@ -32,41 +32,54 @@
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowfullscreen>
                         </iframe>
+                        <MudFab Color="Color.Error" OnClick="@(() => RemoveVideo(item.Id))"
+                            style="position: relative; right: 10px" 
+                            StartIcon="@Icons.Material.Filled.Close" Size="Size.Small" />
+                            <MudText Style="font-weight: bold;color: white">@item.Description</MudText>
                     </div>
                 }
                  
-                <MudTextField T="string" @bind-Value="videoLink" Style="width: 250px;margin-bottom: 25px; background-color: white; padding: 5px" Placeholder="Ссылка на YouTube"></MudTextField>
+               
+            </div> 
+            <div class="row" >
+                <MudTextField T="string" @bind-Value="videoLink" 
+                    Style="width: 250px;margin-bottom: 25px; background-color: white; padding: 5px" 
+                    Placeholder="Ссылка на YouTube"></MudTextField>
+                <MudTextField T="string" @bind-Value="videoDesc" 
+                    Style="width: 250px;margin-bottom: 25px; background-color: white; padding: 5px" 
+                    Placeholder="Название"></MudTextField>
+        
             
                 <MudButton OnClick="SaveVideo" Variant="Variant.Filled" style="width: 250px;margin-bottom: 50px; margin-left: 10px" Color="Color.Secondary" >Добавить видео </MudButton>
-                     
-                </div>
             </div>
         </div>
-        
     </div>
+    
+    
+</div>
       
 
 @code{
     List<VideoContent> videos = new();
     string image = string.Empty;
     string videoLink = string.Empty;
+    string videoDesc = string.Empty;
     protected override async Task OnInitializedAsync()
     {
         var rnd = new Random();
         image = "background-image: url(/images/mainbg" + Math.Ceiling((decimal)rnd.Next(1,400)/100) + ".jpg);opacity: .1";
-        videos = await contentService.GetVideosAsync();
-        @* videos.Add("kibJJCxMa8c");
-        videos.Add("4QpZkaP1i0I");
-        videos.Add("bsjHDFM_RW0");
-        videos.Add("ukfCdCthnNo");
-        videos.Add("7guwS_kmX0c");
-        videos.Add("ATjZavWTWsg"); *@
+        videos = await contentService.GetVideosAsync();   
     }
     async Task SaveVideo()
     {
         var link = videoLink.Substring(videoLink.Length - 11, 11);
-        if(link.Length == 11) await contentService.AddVideoAsync(link);
+        if(link.Length == 11) await contentService.AddVideoAsync(link, videoDesc);
         videoLink = string.Empty;
+        navManager.NavigateTo("videos", true);
+    }
+    async Task RemoveVideo(string videoId)
+    {
+        await contentService.RemoveVideo(videoId);   
         navManager.NavigateTo("videos", true);
     }
 }

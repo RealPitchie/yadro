@@ -11423,3 +11423,21 @@ img[tabindex="0"]:focus~* {
 .small-text {
     font-size: x-small;
 }
+
+.video-block {
+    height: 33vh;
+    margin-bottom: 50px;
+}
+
+.video-block>button {
+    opacity: 0.3;
+    position: relative;
+    float: right;
+    right: 10px;
+    bottom: 35px;
+    transition: 0.5s;
+}
+
+.video-block>button {
+    opacity: 1;
+}
