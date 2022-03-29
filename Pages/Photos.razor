@@ -1,5 +1,12 @@
 @page "/photos"
 
+@using Data.Models
+@using Data.Services
+
+@inject ContentService contentService
+@inject NavigationManager navManager
+@inject IWebHostEnvironment env
+
 <div style="background: #000;"> 
     <div style="position: sticky; ">
         <div class="row h-100 align-items-center justify-content-center text-center">
@@ -10,17 +17,30 @@
             <div class="row gallery" style="width: 80%; margin: 25px auto; justify-content: space-between;">
                 @foreach (var item in photos)
                 {
-                    <div class="col ramka">
-                        <img src=@item alt="" style="box-shadow: 0 0 5px #666666;" width="250" tabindex="0"/>
+                    <div class="col-md-4">
+                       <div class="ramka">
+                            <img src=@item.Path title=@item.Description style="box-shadow: 0 0 5px #666666;" width="250" tabindex="0"/>
+                            <MudFab Color="Color.Error" OnClick="@(() => RemoveImage(item.Id))"
+                                style="position: relative; right: 10px" 
+                                StartIcon="@Icons.Material.Filled.Close" Size="Size.Small" />
+                       </div>
                     </div>
                 }
                 
             </div>
         </div>
         <div class="row" style="width: 80%; margin: 25px auto">
-            <a class="btn btn-primary" style="width: 150px" @onclick="AddImage">
-                Добавить фото
-            </a>
+            <div class="col-md-3">
+                <InputFile id="fileInput" accept=".jpg" OnChange="UploadFiles" hidden multiple />
+
+                <MudButton HtmlTag="label"
+                        Variant="Variant.Filled"
+                        Color="Color.Primary"
+                        StartIcon="@Icons.Filled.CloudUpload"
+                        for="fileInput">
+                    Добавить фото
+                </MudButton>
+            </div>
         </div>
     </div>
     
@@ -28,22 +48,31 @@
 
 @code{
     string image = string.Empty;
-    List<string> photos = new();
-    protected override void OnInitialized()
+    List<ImageContent> photos = new();
+    IList<IBrowserFile> files = new List<IBrowserFile>();
+    
+    protected override async Task OnInitializedAsync()
     {
         var rnd = new Random();
         image = "background-image: url(/images/mainbg" + Math.Ceiling((decimal)rnd.Next(1,400)/100) + ".jpg);";
-
-        //temp shit
-        photos.Add("images/test1.jpg");
-        photos.Add("images/test2.jpg");
-        photos.Add("images/test3.jpg");
-        photos.Add("images/test4.jpg");
-        photos.Add("images/test5.jpg");
-        photos.Add("images/test6.jpg");
+        photos = await contentService.GetImagesAsync();
     }
-    async Task AddImage()
+    private async Task UploadFiles(InputFileChangeEventArgs e)
     {
-
+        var path = env.WebRootPath + "/images/photo/";
+        foreach (var file in e.GetMultipleFiles())
+        {
+            FileStream fs = new FileStream(path + file.Name, FileMode.Create);
+            await file.OpenReadStream(maxAllowedSize: 10000000).CopyToAsync(fs); 
+            await contentService.AddImageAsync("/images/photo/" + file.Name, string.Empty);
+            
+        }
+        //TODO upload the files to the server
+        navManager.NavigateTo("photos", true);
+    }
+    async Task RemoveImage(string videoId)
+    {
+        await contentService.RemoveImage(videoId);   
+        navManager.NavigateTo("photos", true);
     }
 }

@@ -16,12 +16,11 @@ namespace yadro.Data.Services
             await _context.AddAsync(target);
             await _context.SaveChangesAsync(); 
         }
-        public async Task<ImageContent> AddImageAsync(string link)
+        public async Task AddImageAsync(string link, string description)
         {
-            var target = new ImageContent { Id = Guid.NewGuid().ToString(), Path = link, Description = string.Empty };
+            var target = new ImageContent { Id = Guid.NewGuid().ToString(), Path = link, Description = description };
             await _context.AddAsync(target);
-            await _context.SaveChangesAsync();
-            return target;
+            await _context.SaveChangesAsync(); 
         }
         public async Task<List<VideoContent>> GetVideosAsync()
         {
@@ -36,6 +35,12 @@ namespace yadro.Data.Services
         {
             var target = _context.Videos.FirstOrDefault(v => v.Id == id);
             if(target != null) _context.Videos.Remove(target);
+            await _context.SaveChangesAsync();
+        }
+        public async Task RemoveImage(string id)
+        {
+            var target = _context.Photos.FirstOrDefault(i => i.Id == id);
+            if(target != null) _context.Remove(target);
             await _context.SaveChangesAsync();
         }
     }
