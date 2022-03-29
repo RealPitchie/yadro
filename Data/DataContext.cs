@@ -12,4 +12,6 @@ public class DataContext : DbContext
     }
     public DbSet<Post> Posts { get; set; }
     public DbSet<Comment> Comments { get; set; }
+    public DbSet<VideoContent> Videos { get; set; }
+    public DbSet<ImageContent> Photos { get; set; }
 }

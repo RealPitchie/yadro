@@ -17,14 +17,14 @@ services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDbContext<DataContext>(
     options => options.UseNpgsql(connectionString)
 );
-services.AddScoped<BlogService>();
+services.AddTransient<BlogService>();
+services.AddTransient<ContentService>();
 services.AddDefaultIdentity<IdentityUser>(options => 
     options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 services.AddRazorPages();
 services.AddServerSideBlazor();
-services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
-services.AddSingleton<WeatherForecastService>();
+services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>(); 
 services.AddMudServices();
 
 var app = builder.Build();
