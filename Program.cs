@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using yadro.Areas.Identity;
 using yadro.Data;
 using yadro.Data.Services;
-using MudBlazor.Services;
+using MudBlazor.Services; 
 
 var builder = WebApplication.CreateBuilder(args);
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);

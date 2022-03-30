@@ -11429,7 +11429,7 @@ img[tabindex="0"]:focus~* {
 }
 
 .small-text {
-    font-size: x-small;
+    font-size: small;
 }
 
 .video-block {

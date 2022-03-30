@@ -32,26 +32,30 @@
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowfullscreen>
                         </iframe>
-                        <MudFab Color="Color.Error" OnClick="@(() => RemoveVideo(item.Id))"
-                            style="position: relative; right: 10px" 
-                            StartIcon="@Icons.Material.Filled.Close" Size="Size.Small" />
-                        <MudText Style="font-weight: bold;color: white">@item.Description</MudText>
+                        <AuthorizeView>
+                            <MudFab Color="Color.Error" OnClick="@(() => RemoveVideo(item.Id))"
+                                style="position: relative; right: 10px" 
+                                StartIcon="@Icons.Material.Filled.Close" Size="Size.Small" />
+                            <MudText Style="font-weight: bold;color: white">@item.Description</MudText>
+                        </AuthorizeView>
                     </div>
                 }
                  
                
             </div> 
-            <div class="row" >
-                <MudTextField T="string" @bind-Value="videoLink" 
-                    Style="width: 250px;margin-bottom: 25px; background-color: white; padding: 5px" 
-                    Placeholder="Ссылка на YouTube"></MudTextField>
-                <MudTextField T="string" @bind-Value="videoDesc" 
-                    Style="width: 250px;margin-bottom: 25px; background-color: white; padding: 5px" 
-                    Placeholder="Название"></MudTextField>
-        
+            <AuthorizeView>
+                <div class="row" >
+                    <MudTextField T="string" @bind-Value="videoLink" 
+                        Style="width: 250px;margin-bottom: 25px; background-color: white; padding: 5px" 
+                        Placeholder="Ссылка на YouTube"></MudTextField>
+                    <MudTextField T="string" @bind-Value="videoDesc" 
+                        Style="width: 250px;margin-bottom: 25px; background-color: white; padding: 5px" 
+                        Placeholder="Название"></MudTextField>
             
-                <MudButton OnClick="SaveVideo" Variant="Variant.Filled" style="width: 250px;margin-bottom: 50px; margin-left: 10px" Color="Color.Secondary" >Добавить видео </MudButton>
-            </div>
+                
+                    <MudButton OnClick="SaveVideo" Variant="Variant.Filled" style="width: 250px;margin-bottom: 50px; margin-left: 10px" Color="Color.Secondary" >Добавить видео </MudButton>
+                </div>
+            </AuthorizeView>
         </div>
     </div>
     

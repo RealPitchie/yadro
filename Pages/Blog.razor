@@ -13,18 +13,20 @@
                 <h1 class="text-white  largest-text-other" style="margin-left: 25px;">Наши мысли</h1>
                 <hr class="divider" style="max-width: 35%; margin-left: 25px"/>
             </div>
-            <div class="row" style="width: 80%; margin: 25px auto">
-                <a class="btn btn-primary" style="width: 150px;" @onclick="AddPost">
-                    Добавить пост
-                </a>
-            </div>
+            <AuthorizeView>
+                <div class="row" style="width: 80%; margin: 25px auto">
+                    <a class="btn btn-primary" style="width: 150px;" @onclick="AddPost">
+                        Добавить пост
+                    </a>
+                </div>
+            </AuthorizeView>
             <div class="row blog-row">
                 @if(posts.Count > 0)
                 {
                     @foreach (var item in posts)
                     {
                         <div class="card" style="padding: 25px; margin: 25px auto">
-                            <span class="text-muted small-text" style="text-align: right; margin-top: -25px;">@item.Posted.ToString("d")</span>
+                            <span class="text-muted small-text" style="text-align: right; margin-top: -15px;">@item.Posted.ToString("d")</span>
                             <img class="card-img-top" src=@("images/blog/" + item.Image) style="margin: 25px auto;" alt=@item.Title>
                             <h3 class="card-title" >
                                 @item.Title 

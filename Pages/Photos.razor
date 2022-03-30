@@ -20,28 +20,32 @@
                     <div class="col-md-4">
                        <div class="ramka">
                             <img src=@item.Path title=@item.Description style="box-shadow: 0 0 5px #666666;" width="250" tabindex="0"/>
-                            <MudFab Color="Color.Error" OnClick="@(() => RemoveImage(item.Id))"
-                                style="position: relative; right: 10px" 
-                                StartIcon="@Icons.Material.Filled.Close" Size="Size.Small" />
+                            <AuthorizeView>
+                                <MudFab Color="Color.Error" OnClick="@(() => RemoveImage(item.Id))"
+                                    style="position: relative; right: 10px" 
+                                    StartIcon="@Icons.Material.Filled.Close" Size="Size.Small" />
+                            </AuthorizeView>
                        </div>
                     </div>
                 }
                 
             </div>
         </div>
-        <div class="row" style="width: 80%; margin: 25px auto">
-            <div class="col-md-3">
-                <InputFile id="fileInput" accept=".jpg" OnChange="UploadFiles" hidden multiple />
+        <AuthorizeView>
+            <div class="row" style="width: 80%; margin: 25px auto">
+                <div class="col-md-3">
+                    <InputFile id="fileInput" accept=".jpg" OnChange="UploadFiles" hidden multiple />
 
-                <MudButton HtmlTag="label"
-                        Variant="Variant.Filled"
-                        Color="Color.Primary"
-                        StartIcon="@Icons.Filled.CloudUpload"
-                        for="fileInput">
-                    Добавить фото
-                </MudButton>
+                    <MudButton HtmlTag="label"
+                            Variant="Variant.Filled"
+                            Color="Color.Primary"
+                            StartIcon="@Icons.Filled.CloudUpload"
+                            for="fileInput">
+                        Добавить фото
+                    </MudButton>
+                </div>
             </div>
-        </div>
+        </AuthorizeView>
     </div>
     
 </div> 
