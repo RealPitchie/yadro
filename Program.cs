@@ -4,7 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using yadro.Areas.Identity;
 using yadro.Data;
 using yadro.Data.Services;
-using MudBlazor.Services; 
+using MudBlazor.Services;
+using Howler.Blazor.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -26,6 +27,8 @@ services.AddRazorPages();
 services.AddServerSideBlazor();
 services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>(); 
 services.AddMudServices();
+services.AddScoped<IHowl, Howl>();
+services.AddScoped<IHowlGlobal, HowlGlobal>();
 
 var app = builder.Build(); 
 

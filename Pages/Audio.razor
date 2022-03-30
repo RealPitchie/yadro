@@ -1,0 +1,187 @@
+@page "/audio"
+
+@using Data.Models
+@using Data.Services
+@using Howler.Blazor.Components
+
+@inject ContentService contentService
+@inject NavigationManager navManager
+@inject IWebHostEnvironment env
+@inject IHowl Howl
+@inject IHowlGlobal HowlGlobal
+
+<div style="background: #000;"> 
+    <div style="position: sticky; ">
+        <div class="row h-100 align-items-center justify-content-center text-center">
+            <div class="col-lg-10 align-self-center">
+                <h1 class="text-white  largest-text-other" style="margin-left: 25px;">Наши песни</h1>
+                <hr class="divider" style="max-width: 35%; margin-left: 25px"/>
+            </div>
+            <div class="row" style="margin-left: 10%;">
+                @if(songs.Count > 0)
+                {
+                    @foreach (var item in songs)
+                    {
+                        <div class="col audio">
+                            
+                                <MudCard class="audio-card" style="padding: 10px; margin-bottom: 25px; background-color: rgba(255,255,255,.5);" >
+                                    <div class="row" style="align-items: center;">
+                                        <div class="col-md-6">
+                                            <span style="font-weight: bold;">
+                                                @item.DisplayedName
+                                            </span>
+                                            @if(item.IsPlaying)
+                                            {
+                                                <div class="ocean">
+                                                    <div class="wave"></div>  
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="col-md-6">
+                                            <MudFab Style="background-color: cadetblue" OnClick="@(() => Play(item))" StartIcon="@Icons.Material.Filled.PlayArrow" Size="Size.Small" />
+                                            <MudFab Style="background-color: cadetblue" OnClick="@(() => Stop(item))" StartIcon="@Icons.Material.Filled.Stop" Size="Size.Small" />
+                                            <MudFab Style="background-color: cadetblue" OnClick="Pause" StartIcon="@Icons.Material.Filled.Pause" Size="Size.Small" /> 
+                                        </div>
+                                    </div> 
+                                </MudCard>
+                            
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        @* <AuthorizeView> *@
+            <div>
+                <div class="row" style="width: 80%; margin: 25px auto">
+                    <div class="col-md-3">
+                        <InputFile id="fileInput" accept=".mp3" OnChange="UploadFiles" hidden />
+
+                        <MudButton HtmlTag="label"
+                                Variant="Variant.Filled"
+                                Color="Color.Primary"
+                                StartIcon="@Icons.Filled.CloudUpload"
+                                for="fileInput">
+                            Добавить трек
+                        </MudButton>
+                    </div>
+                </div>
+            </div>
+        @* </AuthorizeView> *@
+    </div>
+    
+</div> 
+
+
+@code{
+    AudioContent audio = new();
+    List<AudioContent> songs = new();
+    private const double MaxRate = 4.0;
+    private const double MinRate = 0.25;
+    protected TimeSpan TotalTime;
+    protected double Rate = 1.0;
+    protected string State = "-";
+    protected string SupportedCodes;
+    public string ErrorMessage = "";
+    public List<int> SoundIds = new List<int>();
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+
+        if (firstRender)
+        {
+            // Display all supported codecs
+            var codecs = await HowlGlobal.GetCodecs();
+            SupportedCodes = string.Join(", ", codecs);
+
+            StateHasChanged();
+        }
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        // Register callbacks
+        Howl.OnPlay += e =>
+        {
+            ErrorMessage = string.Empty;
+            State = "Playing";
+            TotalTime = e.TotalTime;
+
+            StateHasChanged();
+        };
+
+        Howl.OnStop += e =>
+        {
+            State = "Stopped";
+
+            StateHasChanged();
+        };
+
+        Howl.OnPause += e =>
+        {
+            State = "Paused";
+
+            StateHasChanged();
+        };
+
+        Howl.OnRate += e =>
+        {
+            Rate = e.CurrentRate;
+
+            StateHasChanged();
+        };
+
+        Howl.OnPlayError += e =>
+        {
+            ErrorMessage = $"OnPlayError : {e.Error}";
+
+            StateHasChanged();
+        };
+
+        Howl.OnLoadError += e =>
+        {
+            ErrorMessage = $"OnLoadError : {e.Error}";
+
+            StateHasChanged();
+        };
+        songs = await contentService.GetSongsAsync();
+    }
+    private async Task UploadFiles(InputFileChangeEventArgs e)
+    {
+        var path = env.WebRootPath + "/audio/"; 
+        FileStream fs = new FileStream(path + e.File.Name, FileMode.Create);
+        await e.File.OpenReadStream(maxAllowedSize: 40000000).CopyToAsync(fs); 
+        await contentService.AddAudioAsync("/audio/" + e.File.Name, e.File.Name.Substring(0, e.File.Name.Length - 4));
+         
+        //TODO upload the files to the server
+        navManager.NavigateTo("audio", true);
+    }
+    protected async Task Play(AudioContent args)
+    {
+        foreach (var item in songs)
+        {
+            item.IsPlaying = false;
+        }
+        foreach (int id in SoundIds)
+        {
+            await Howl.Stop(id);
+        }
+        args.IsPlaying = true;
+        SoundIds.Add(await Howl.Play(args.Path)); 
+    }
+
+    protected async Task Stop(AudioContent args)
+    {
+        args.IsPlaying = false;
+        foreach (int id in SoundIds)
+        {
+            await Howl.Stop(id);
+        }
+    }
+
+    protected async Task Pause()
+    {
+        foreach (int id in SoundIds)
+        {
+            await Howl.Pause(id);
+        }
+    }
+}

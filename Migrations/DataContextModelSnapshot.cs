@@ -22,6 +22,25 @@ namespace yadro.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("yadro.Data.Models.AudioContent", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DisplayedName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Path")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Audios");
+                });
+
             modelBuilder.Entity("yadro.Data.Models.BlogImage", b =>
                 {
                     b.Property<string>("Id")

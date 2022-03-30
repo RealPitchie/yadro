@@ -22,6 +22,12 @@ namespace yadro.Data.Services
             await _context.AddAsync(target);
             await _context.SaveChangesAsync(); 
         }
+        public async Task AddAudioAsync(string link, string displayedName)
+        {
+            var target = new AudioContent { Id = Guid.NewGuid().ToString(), Path = link, DisplayedName = displayedName};
+            await _context.AddAsync(target);
+            await _context.SaveChangesAsync();
+        }
         public async Task<List<VideoContent>> GetVideosAsync()
         {
             var videos = await _context.Videos.ToListAsync();
@@ -30,6 +36,10 @@ namespace yadro.Data.Services
         public async Task<List<ImageContent>> GetImagesAsync()
         {
             return await _context.Photos.ToListAsync();
+        }
+        public async Task<List<AudioContent>> GetSongsAsync()
+        {
+            return await _context.Audios.ToListAsync();
         }
         public async Task RemoveVideo(string id)
         {
