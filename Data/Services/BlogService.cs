@@ -28,12 +28,24 @@ namespace yadro.Data.Services
         }
         public async Task<List<Post>> GetAsync()
         {
-            return await _context.Posts.Include(p => p.Comments).ToListAsync();
+            return await _context.Posts.OrderByDescending(p => p.Posted).Include(p => p.Comments).ToListAsync();
         }
         public async Task<Post> GetAsync(string postId)
         {
             #nullable disable
             return await _context.Posts.Where(p => p.Id == postId).Include(p => p.Comments).FirstOrDefaultAsync();
         } 
+        public async Task AddVideoAsync(string link, string description)
+        {
+            var target = new VideoContent { Id = Guid.NewGuid().ToString(), Path = link, Description = description };
+            await _context.AddAsync(target);
+            await _context.SaveChangesAsync(); 
+        }
+        public async Task AddImageAsync(string link, string description)
+        {
+            var target = new ImageContent { Id = Guid.NewGuid().ToString(), Path = link, Description = description };
+            await _context.AddAsync(target);
+            await _context.SaveChangesAsync(); 
+        }
     }
 }

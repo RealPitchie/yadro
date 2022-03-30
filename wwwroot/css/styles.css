@@ -11344,6 +11344,11 @@ header.masthead .h1 {
     margin: 0 auto;
 }
 
+.kustom-card {
+    width: 50vw !important;
+    margin: 0 auto !important;
+}
+
 @media (max-width: 769px) {
     .blog-row {
         height: 50%;
@@ -11362,6 +11367,9 @@ header.masthead .h1 {
         z-index: 15;
         font-family: 'Raleway', sans-serif;
         margin-top: 30%;
+    }
+    .kustom-card {
+        width: 90vw !important;
     }
 }
 

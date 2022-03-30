@@ -16,5 +16,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.3"/>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.3"/>
     <PackageReference Include="MudBlazor" Version="6.0.8"/>
+    <PackageReference Include="BlazorPro.Spinkit" Version="1.2.0"/>
   </ItemGroup>
 </Project>

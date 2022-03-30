@@ -19,9 +19,10 @@
                     @foreach (var item in posts)
                     {
                         <div class="card" style="padding: 25px; margin: 25px auto">
+                            <span class="text-muted small-text" style="text-align: right; margin-top: -25px;">@item.Posted.ToString("d")</span>
                             <img class="card-img-top" src=@("images/blog/" + item.Image) style="margin: 25px auto;" alt=@item.Title>
                             <h3 class="card-title">
-                                @item.Title <span class="text-muted small-text" style="float: right;">@item.Posted.ToString("d")</span>
+                                @item.Title 
                             </h3>
                             <h5>
                                 @item.Subtitle
