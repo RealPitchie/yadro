@@ -37,13 +37,13 @@ namespace yadro.Data.Services
         } 
         public async Task AddVideoAsync(string link, string description)
         {
-            var target = new VideoContent { Id = Guid.NewGuid().ToString(), Path = link, Description = description };
+            var target = new BlogVideo { Id = Guid.NewGuid().ToString(), Path = link, Description = description };
             await _context.AddAsync(target);
             await _context.SaveChangesAsync(); 
         }
         public async Task AddImageAsync(string link, string description)
         {
-            var target = new ImageContent { Id = Guid.NewGuid().ToString(), Path = link, Description = description };
+            var target = new BlogImage { Id = Guid.NewGuid().ToString(), Path = link, Description = description };
             await _context.AddAsync(target);
             await _context.SaveChangesAsync(); 
         }

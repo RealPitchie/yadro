@@ -19,11 +19,11 @@
                         <h5 class="class-title" style="padding: 25px;">
                             Новый пост
                         </h5>
-                        <MudTextField Placeholder="Заголовок" T="string" @bind-Value="post.Title" />
+                        <MudTextField Counter="25" MaxLength="25" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" Placeholder="Заголовок" T="string" @bind-Value="post.Title" />
                     
-                        <MudTextField Placeholder="Подзаголовок" T="string" @bind-Value="post.Subtitle" />
+                        <MudTextField Counter="150" MaxLength="150" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" Placeholder="Подзаголовок" T="string" @bind-Value="post.Subtitle" />
 
-                        <MudTextField Lines=3 Placeholder="Текст" T="string" @bind-Value="post.Text" />
+                        <MudTextField Lines=3 Counter="1000" Immediate="true" Validation="@(new Func<string, IEnumerable<string>>(MaxCharacters))" MaxLength="1000" Placeholder="Текст" T="string" @bind-Value="post.Text" />
                         <br>
                         <div class="row" style="justify-content: center;">
                             <div class="col-md-6" style="text-align: center; margin-bottom: 10px">
@@ -90,5 +90,10 @@
         isImageAdded = true;
         //TODO upload the files to the server
         @* navManager.NavigateTo("photos", true); *@
+    }
+    private IEnumerable<string> MaxCharacters(string ch)
+    {
+        if (!string.IsNullOrEmpty(ch) && 25 < ch?.Length)
+            yield return "Max 25 characters";
     }
 }
