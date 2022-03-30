@@ -63,7 +63,7 @@
         foreach (var file in e.GetMultipleFiles())
         {
             FileStream fs = new FileStream(path + file.Name, FileMode.Create);
-            await file.OpenReadStream(maxAllowedSize: 10000000).CopyToAsync(fs); 
+            await file.OpenReadStream(maxAllowedSize: 40000000).CopyToAsync(fs); 
             await contentService.AddImageAsync("/images/photo/" + file.Name, string.Empty);
             
         }
