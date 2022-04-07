@@ -70,8 +70,7 @@
             await file.OpenReadStream(maxAllowedSize: 40000000).CopyToAsync(fs); 
             await contentService.AddImageAsync("/images/photo/" + file.Name, string.Empty);
             
-        }
-        //TODO upload the files to the server
+        } 
         navManager.NavigateTo("photos", true);
     }
     async Task RemoveImage(string videoId)

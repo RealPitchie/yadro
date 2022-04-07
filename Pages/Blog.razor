@@ -54,7 +54,7 @@
     {
         posts = await blogService.GetAsync();
     }
-    async Task AddPost()
+    void AddPost()
     {
         navManager.NavigateTo("addPost", true);
     }

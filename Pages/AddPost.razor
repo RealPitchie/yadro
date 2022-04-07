@@ -89,9 +89,7 @@
         await blogService.AddImageAsync("/images/blog/" + e.File.Name, string.Empty);
         post.Image = e.File.Name;
         isLoading = false;
-        isImageAdded = true;
-        //TODO upload the files to the server
-        @* navManager.NavigateTo("photos", true); *@
+        isImageAdded = true;  
     }
     private IEnumerable<string> MaxCharacters(string ch)
     {

@@ -9,6 +9,7 @@ using Howler.Blazor.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 var services = builder.Services;
@@ -26,6 +27,7 @@ services.AddDefaultIdentity<IdentityUser>(options =>
 services.AddRazorPages();
 services.AddServerSideBlazor();
 services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>(); 
+
 services.AddMudServices();
 services.AddScoped<IHowl, Howl>();
 services.AddScoped<IHowlGlobal, HowlGlobal>();

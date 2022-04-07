@@ -48,9 +48,10 @@
                         </div>
                     }
                 }
-            </div>
+            </div> 
+
         </div>
-        @* <AuthorizeView> *@
+        <AuthorizeView>
             <div>
                 <div class="row" style="width: 80%; margin: 25px auto">
                     <div class="col-md-3">
@@ -66,7 +67,8 @@
                     </div>
                 </div>
             </div>
-        @* </AuthorizeView> *@
+        </AuthorizeView>
+            
     </div>
     
 </div> 
@@ -74,9 +76,7 @@
 
 @code{
     AudioContent audio = new();
-    List<AudioContent> songs = new();
-    private const double MaxRate = 4.0;
-    private const double MinRate = 0.25;
+    List<AudioContent> songs = new(); 
     protected TimeSpan TotalTime;
     protected double Rate = 1.0;
     protected string State = "-";
@@ -88,8 +88,7 @@
         await base.OnAfterRenderAsync(firstRender);
 
         if (firstRender)
-        {
-            // Display all supported codecs
+        { 
             var codecs = await HowlGlobal.GetCodecs();
             SupportedCodes = string.Join(", ", codecs);
 
@@ -97,8 +96,7 @@
         }
     }
     protected override async Task OnInitializedAsync()
-    {
-        // Register callbacks
+    { 
         Howl.OnPlay += e =>
         {
             ErrorMessage = string.Empty;
@@ -121,14 +119,7 @@
 
             StateHasChanged();
         };
-
-        Howl.OnRate += e =>
-        {
-            Rate = e.CurrentRate;
-
-            StateHasChanged();
-        };
-
+ 
         Howl.OnPlayError += e =>
         {
             ErrorMessage = $"OnPlayError : {e.Error}";
